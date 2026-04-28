@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💖 Surprise</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    text-align:center;
+    color:white;
+    background:#000814;
+    overflow-x:hidden;
+}
+
+/* نجوم */
+.star{
+    position:absolute;
+    width:3px;
+    height:3px;
+    background:white;
+    border-radius:50%;
+    animation:blink 2s infinite;
+}
+
+@keyframes blink{
+    0%,100%{opacity:0.2}
+    50%{opacity:1}
+}
+
+/* قمر */
+.moon{
+    width:140px;
+    margin-top:15px;
+}
+
+/* كروت */
+.box{
+    background:rgba(255,255,255,0.08);
+    padding:20px;
+    margin:20px auto;
+    width:85%;
+    border-radius:20px;
+    backdrop-filter:blur(10px);
+}
+
+/* زر */
+button{
+    padding:12px 20px;
+    border:none;
+    border-radius:20px;
+    background:white;
+    color:black;
+    font-weight:bold;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+/* input */
+input{
+    padding:12px;
+    border-radius:15px;
+    border:none;
+    text-align:center;
+    width:70%;
+}
+
+.hidden{display:none;}
+</style>
+</head>
+
+<body>
+
+<script>
+for(let i=0;i<60;i++){
+    let s=document.createElement("div");
+    s.className="star";
+    s.style.top=Math.random()*100+"%";
+    s.style.left=Math.random()*100+"%";
+    document.body.appendChild(s);
+}
+</script>
+
+<!-- الموسيقى الجاهزة -->
+<audio id="music" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/10/25/audio_3b5b8c9b6b.mp3?filename=romantic-music-ambient-121949.mp3" type="audio/mpeg">
+</audio>
+
+<!-- صفحة الدخول -->
+<div id="login">
+
+    <div class="box">
+        <h2>💖 اكتبي الباسورد</h2>
+        <input type="password" id="pass" oninput="heartEffect()">
+        <p id="heartShow"></p>
+        <button onclick="check()">دخول</button>
+    </div>
+
+</div>
+
+<!-- صفحة البداية -->
+<div id="page1" class="hidden">
+
+    <div class="box">
+        <h2>💖 دوسي هنا يا حبيبتي</h2>
+        <p>في مفاجأة مستنياكي 🌙</p>
+        <button onclick="goNext()">افتحي 💕</button>
+    </div>
+
+</div>
+
+<!-- الصفحة الثانية -->
+<div id="page2" class="hidden">
+
+<div class="box">
+
+    <!-- صورة قمر جاهزة -->
+    <img class="moon" src="https://i.imgur.com/3KXJQ9C.png">
+
+    <h3>🌙 دي انتي</h3>
+    <p>بتنوري حياتي برغم إنك أحلى من القمر في عيوني 💖</p>
+</div>
+
+<div class="box">
+    <button onclick="showText()">💌 دوسي متخافيش</button>
+    <p id="msg"></p>
+</div>
+
+</div>
+
+<script>
+
+const realPass="2010613";
+
+/* قلوب عند الكتابة */
+function heartEffect(){
+    let val=document.getElementById("pass").value;
+    document.getElementById("heartShow").innerHTML="❤️".repeat(val.length);
+}
+
+/* دخول */
+function check(){
+    let val=document.getElementById("pass").value.trim();
+
+    if(val===realPass){
+        document.getElementById("login").classList.add("hidden");
+        document.getElementById("page1").classList.remove("hidden");
+    }else{
+        alert("❌ الباسورد غلط");
+    }
+}
+
+/* انتقال + تشغيل الموسيقى */
+function goNext(){
+    document.getElementById("page1").classList.add("hidden");
+    document.getElementById("page2").classList.remove("hidden");
+
+    document.getElementById("music").play();
+}
+
+/* كتابة حرف حرف */
+function showText(){
+    let text="أنا مش عايز منك حاجة غير إنك تفضلي مبسوطة دايمًا ❤️ وجودك في حياتي هو أجمل صدفة حصلتلي، وكل يوم بيمر بيكي بحس إن الدنيا أحلى من أي حاجة 💖";
+    let i=0;
+    document.getElementById("msg").innerHTML="";
+
+    let typing=setInterval(()=>{
+        document.getElementById("msg").innerHTML+=text[i];
+        i++;
+        if(i>=text.length) clearInterval(typing);
+    },60);
+}
+
+</script>
+
+</body>
+</html>
